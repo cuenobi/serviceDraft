@@ -42,13 +42,10 @@ func main() {
 	corsAllowList := viper.GetStringSlice(`header.cors`)
 	middL := config.CORS(corsAllowList)
 	f.Use(middL)
-	// ConfigDefault := config.ConfigDefault()
-	// f.Use(cors.New(ConfigDefault))
 
-	// logger
-	timeFormat := "2006-01-02 15:04:05"
+	// timeFormat := "2006-01-02 15:04:05"
 	loggerMiddleware := logger.New(logger.Config{
-		TimeFormat: timeFormat,
+		TimeFormat: "2006-01-02 15:04:05",
 		Format:     "${time} | ${status} | ${latency} | ${ips} | ${method} | ${path}\n",
 	})
 	f.Use(loggerMiddleware)
@@ -60,8 +57,8 @@ func main() {
 	})
 
 	type StaffRegisterBody struct {
-		Username string `json:"username" validate:"required,len=6"`
-		Password string `json:"password" validate:"required,len=6"`
+		Username string `json:"username" validate:"required,min=6"`
+		Password string `json:"password" validate:"required,min=6"`
 	}
 	f.Post("/post", func(c *fiber.Ctx) error {
 		var input StaffRegisterBody
