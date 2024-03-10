@@ -5,7 +5,6 @@ import (
 )
 
 func CORS(whiteList []string) fiber.Handler {
-	// สร้าง map เพื่อเก็บรายการที่อนุญาตให้ใช้งาน
 	whiteListMap := make(map[string]bool)
 	for _, origin := range whiteList {
 		whiteListMap[origin] = true
